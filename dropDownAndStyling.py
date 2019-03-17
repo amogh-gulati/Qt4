@@ -90,6 +90,27 @@ class Window(QtGui.QMainWindow):
         self.btn.move(200,120)
         self.btn.clicked.connect(self.prog)
 
+        #drop down shit
+
+        #to get the default style
+        print(self.style().objectName())
+        self.styleChoice = QtGui.QLabel("Windows Vista",self)
+        #the above is to change style
+
+        comboBox = QtGui.QComboBox(self)
+        comboBox.addItem("motif")
+        comboBox.addItem("Windows")
+        comboBox.addItem("cde")
+        comboBox.addItem("Plastique")
+        comboBox.addItem("CleanLooks")
+        comboBox.addItem("WindowsVista")
+        #ideadlly the style setting should be done in init
+        #but here we are also using it with combo box so its 
+        #here
+
+        comboBox.move(50,250)
+        self.styleChoice.move(50,150)
+        comboBox.activated[str].connect(self.style_choice)
         self.show()
     
     def close_application(self):
@@ -115,6 +136,10 @@ class Window(QtGui.QMainWindow):
         while(self.completed<100):
             self.completed+=0.0001
             self.progress.setValue(self.completed)
+
+    def style_choice(self,text):
+        self.styleChoice.setText(text)
+        QtGui.QApplication.setStyle(QtGui.QStyleFactory.create(text))
 
 def run():
     #this is the main running function
